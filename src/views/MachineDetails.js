@@ -52,7 +52,7 @@ import { Card } from "reactstrap";
 import BarChart from "../helpers/Charts/BarChart";
 import { connect } from "react-redux";
 
-function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData }) {
+function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData, bottleDetailsData }) {
   const [notiModal, setNotiModal] = useState(false);
   const [tab, setTab] = useState("4");
   const dispatch = useDispatch();
@@ -2935,9 +2935,6 @@ function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData })
                                 className="card-body"
                                 style={{ background: "#F3F3F3;" }}
                               >
-                                     {bottledispense &&
-                              bottledispense.map((bottle, i) => (
-                                <div key={i}>
                                 <h5 className="card-title">
                                   <p
                                     style={{
@@ -2952,11 +2949,9 @@ function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData })
                                   
                                 </h5>
                            
-                                  {/* <h5>{item.brand_name}</h5> */}
-
-                                  <p>Hello</p>
-                                </div>
-                              ))}
+                                <button className="btn btn-outline-info px-4">
+                                  {bottleDetailsData && bottleDetailsData.bottles_on_shelf}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -2999,7 +2994,7 @@ function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData })
                                   </p>
                                 </h5>
                                 <button className="btn btn-outline-info px-4">
-                                  100
+                                  {bottleDetailsData && bottleDetailsData.empty_bottles_bought}
                                 </button>
                               </div>
                             </div>
@@ -3043,7 +3038,7 @@ function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData })
                                   </p>
                                 </h5>
                                 <button className="btn btn-outline-info px-4">
-                                  34
+                                {bottleDetailsData && bottleDetailsData.total_bottles_refilled}
                                 </button>
                               </div>
                             </div>
@@ -3088,7 +3083,7 @@ function MachineDetails({ stock_level, graph_data, sales_per, sales_graphData })
                                   </p>
                                 </h5>
                                 <button className="btn btn-outline-info px-4">
-                                  30,000 RS
+                                {bottleDetailsData && bottleDetailsData.new_bottles_revenue}
                                 </button>
                               </div>
                             </div>
@@ -3119,6 +3114,7 @@ const mapToStateProps = (state) => {
     stock_level: { ...getMachineStates(state).stock_level },
     sales_per: { ...getMachineStates(state).sales_level },
     sales_graphData: { ...getMachineStates(state).sales_graph},
+    bottleDetailsData: { ...getMachineStates(state).bottleDetails},
     
   };
 };
